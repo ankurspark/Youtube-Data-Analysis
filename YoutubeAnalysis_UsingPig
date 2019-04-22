@@ -1,0 +1,25 @@
+
+1) Find out the top 5 categories with maximum number of videos uploaded.
+
+A = LOAD 'youtubedata.txt' USING PigStorage();
+B = FOREACH A GENERATE (int)$1 As id, (chararray)$3 AS category;
+C = GROUP B by category;
+D = FOREACH C GENERATE group, COUNT(B.category) as category_count;
+E=  ORDER D by category_count desc;
+F=  LIMIT E 5;
+
+
+2) Find out the top 10 rated videos.
+
+
+A = LOAD 'youtubedata.txt' USING PigStorage();
+B = FOREACH A GENERATE $0 as ID, $6 as Rating;
+C = ORDER B BY Rating DESC;
+D= LIMIT C 10;
+
+3) Find out the most viewed videos
+
+A = LOAD 'youtubedata.txt' USING PigStorage();
+B = FOREACH A GENERATE $0 as ID, $5 as Views;
+C = ORDER B BY Views DESC;
+D= LIMIT C 10;
