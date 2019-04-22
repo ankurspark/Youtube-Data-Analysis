@@ -1,0 +1,49 @@
+
+1) CREATE TABLE YoutubeData
+
+CREATE TABLE YoutubeData
+(
+ID varchar(11),
+uploader String,
+interval int,
+category String,
+length int,
+views int,
+rating float,
+no_of_ratings int,
+no_of_comments int,
+related_video_id varchar(11)
+)
+row format delimited
+fields terminated by "\t";
+
+2) LOAD DATA
+
+LOAD DATA LOCAL INPATH 'youtubedata.txt' INTO TABLE YoutubeData;
+
+3) CHECK YoutubeData
+
+SELECT * FROM YoutubeData;
+
+Problems
+
+1) Find out the top 5 categories with maximum number of videos uploaded.
+
+CREATE TABLE Top_5_Categories AS SELECT category AS TOP_CATEGORIES ,COUNT(ID) AS TOTAL_VIDEOS
+FROM YoutubeData
+GROUP BY category
+ORDER BY TOTAL_VIDEOS DESC
+LIMIT 5
+
+2) Find out the top 10 rated videos.
+
+CREATE TABLE Top10 AS
+SELECT * FROM YoutubeData
+ORDER BY RATING DESC
+LIMIT 10
+
+3) Find out the most viewed videos
+
+SELECT * FROM YoutubeData
+ORDER BY views DESC
+LIMIT 5
